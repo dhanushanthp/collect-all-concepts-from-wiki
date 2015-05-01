@@ -1,4 +1,5 @@
 package com.pearson.main;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,7 +35,7 @@ public class Main {
 
 		HttpResponse response = client.execute(request);
 
-//		System.out.println("\nSending 'GET' request to URL : " + url);
+		// System.out.println("\nSending 'GET' request to URL : " + url);
 		System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
 		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -81,21 +82,21 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		Properties prop = new Properties();
-		InputStream input =  new FileInputStream("/opt/data-extractor/config/config.properties");
+		InputStream input = new FileInputStream("/opt/data-extractor/config/config.properties");
 		prop.load(input);
 		int numberOfResults = Integer.parseInt(prop.getProperty("num_of_result"));
 		int startingFrom = Integer.parseInt(prop.getProperty("starting_count"));
-
+		int count = 0;
 		while (true) {
 			System.out.println("Starting from : " + startingFrom);
 			String response = sendGet(numberOfResults, startingFrom);
-			if(response.equals("")){
+			if (response.equals("")) {
 				break;
 			}
 			String concepts = getConcepts(response);
-			writeInToFile(concepts, String.valueOf(startingFrom));
+			writeInToFile(concepts, count + "_" + String.valueOf(startingFrom));
 			startingFrom = startingFrom + numberOfResults;
-
+			count++;
 		}
 	}
 }
