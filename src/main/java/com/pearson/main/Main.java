@@ -60,8 +60,10 @@ public class Main {
 			String line = jsonElement.getAsJsonObject().get("Concept").getAsJsonObject().get("value").getAsString();
 			if (line.contains("Category:")) {
 				line = line.replace("http://dbpedia.org/resource/Category:", "");
-			} else {
+			} else if(line.contains("/resource/")){
 				line = line.replace("http://dbpedia.org/resource/", "");
+			} else{
+				line = line.replace("http://en.wikipedia.org/wiki/", "");
 			}
 
 			sb.append(line + "\n");
