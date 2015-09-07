@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.pearson.util.Config;
 
 public class Main {
 	private static String sendGet(int limit, int offset) throws Exception {
@@ -83,11 +84,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Properties prop = new Properties();
-		InputStream input = new FileInputStream("/opt/data-extractor/config/config.properties");
-		prop.load(input);
-		int numberOfResults = Integer.parseInt(prop.getProperty("num_of_result"));
-		int startingFrom = Integer.parseInt(prop.getProperty("starting_count"));
+			int numberOfResults = Integer.parseInt(Config.getConfig().getProperty("num_of_result"));
+		int startingFrom = Integer.parseInt(Config.getConfig().getProperty("starting_count"));
 		int count = 0;
 		while (true) {
 			System.out.println("Starting from : " + startingFrom);
